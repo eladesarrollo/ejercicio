@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Recursos de Controlladores
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\WorkerController;
+
+//Inicio
 Route::get('/', function () {
     return view('inicio');
 });
+
+//Controladores
+Route::resource('projects', ProjectController::class);
+Route::resource('workers', WorkerController::class);
