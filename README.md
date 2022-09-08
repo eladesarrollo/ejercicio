@@ -35,4 +35,5 @@ php artisan db:seed (Opcional)
 
 # Usando Tailwind CSS
 npm install
+
 npm run dev
