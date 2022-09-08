@@ -14,7 +14,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $data = Project::orderBy('id', 'desc')->paginate(10);
+        return view('projects.index', ['data' => $data]);
     }
 
     /**
@@ -22,9 +23,9 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Project $project)
     {
-        //
+        return view('projects.create', ['project' => $project]);
     }
 
     /**
@@ -33,9 +34,19 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Project $project)
     {
-        //
+        $request->validate([
+            'name'          => 'required',
+            'description'   => 'required',
+        ]);
+
+        $project->firstOrCreate([
+            'name'          => $request->name,
+            'description'   => $request->description,
+        ]);
+
+        return redirect()->route('projects.index');
     }
 
     /**
@@ -57,7 +68,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('projects.edit',['project' => $project]);
     }
 
     /**
@@ -69,7 +80,16 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $request->validate([
+            'name'          => 'required',
+            'description'   => 'required'
+        ]);
+        $project->update([
+            'name'          => $request->name,
+            'description'   => $request->description
+        ]);
+
+        return redirect()->route('projects.edit', $project);
     }
 
     /**
@@ -80,6 +100,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        return back();
     }
 }

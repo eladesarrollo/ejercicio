@@ -14,7 +14,8 @@ class CooperatorController extends Controller
      */
     public function index()
     {
-        //
+        $data = Cooperator::orderBy('id', 'desc')->paginate(10);
+        return view('cooperators.index', ['data' => $data]);
     }
 
     /**
@@ -22,9 +23,9 @@ class CooperatorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Cooperator $cooperator)
     {
-        //
+        return view('cooperators.create', ['cooperator' => $cooperator]);
     }
 
     /**
@@ -33,9 +34,23 @@ class CooperatorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Cooperator $cooperator)
     {
-        //
+        $request->validate([
+            'name'      => 'required',
+            'email'     => 'required|unique:cooperators,email,' . $cooperator->email,
+            'address'   => 'required',
+            'phone'     => 'required'
+        ]);
+
+        $cooperator->firstOrCreate([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'address'   => $request->address,
+            'phone'     => $request->phone
+        ]);
+
+        return redirect()->route('cooperators.index');
     }
 
     /**
@@ -57,7 +72,7 @@ class CooperatorController extends Controller
      */
     public function edit(Cooperator $cooperator)
     {
-        //
+        return view('cooperators.edit',['cooperator' => $cooperator]);
     }
 
     /**
@@ -69,7 +84,22 @@ class CooperatorController extends Controller
      */
     public function update(Request $request, Cooperator $cooperator)
     {
-        //
+        $request->validate([
+            'name'      => 'required',
+            //'email'     => 'required|unique:cooperators,email,' . $cooperator->email,
+            'email'     => 'required',
+            'address'   => 'required',
+            'phone'     => 'required'
+        ]);
+
+        $cooperator->update([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'address'   => $request->address,
+            'phone'     => $request->phone
+        ]);
+
+        return redirect()->route('cooperators.edit', $cooperator);
     }
 
     /**
@@ -80,6 +110,7 @@ class CooperatorController extends Controller
      */
     public function destroy(Cooperator $cooperator)
     {
-        //
+        $cooperator->delete();
+        return back();
     }
 }

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Cooperator extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'address',
+        'phone',
+    ];
 }
