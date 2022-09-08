@@ -22,7 +22,7 @@
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            
+
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                     <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto text-gray-700 sm:h-20">
@@ -43,11 +43,17 @@
                             </div>
 
                             <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm" style="text-align: justify;">
+                                {{-- <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm" style="text-align: justify;">
                                     Agregar enlaces para el ejercicio: <br>
                                     -Catálogos<br>
                                     -Reporte<br>
                                     -Otros enlaces que considere necesario
+                                </div> --}}
+
+                                <div class="ml-4 text-lg leading-7 font-semibold">
+                                    <a href="/cooperators" class="underline text-gray-900 dark:text-white">Cooperantes</a>
+                                    <br>
+                                    <a href="/projects" class="underline text-gray-900 dark:text-white">Proyectos</a>
                                 </div>
                             </div>
                         </div>

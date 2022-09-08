@@ -20,3 +20,20 @@ php artisan serve
 
 Verificar proyecto en:
 http://localhost:8000
+
+# Condigurar base de datos
+Modificar variables en .env
+```
+DB_DATABASE=nombre
+DB_USERNAME=usuario
+DB_PASSWORD=password
+```
+
+php artisan migrate
+
+php artisan db:seed (Opcional)
+
+# Usando Tailwind CSS
+npm install
+
+npm run dev
