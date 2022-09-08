@@ -19,8 +19,11 @@
                 <th scope="col" class="py-3 px-6">
                     Teléfono
                 </th>
-                <th scope="col" class="py-3 px-6 text-center" colspan="3">
-                    Opciones
+                <th scope="col" class="py-3 px-6 text-center">
+                    Administración
+                </th>
+                <th scope="col" class="py-3 px-6 text-center">
+                    Proyectos
                 </th>
             </tr>
         </thead>
@@ -39,23 +42,24 @@
                 <td class="py-4 px-6">
                     {{ $item->phone }}
                 </td>
-                <td class="py-2 px-2 text-center">
-                    <div class="my-2">
-                        <a href="{{ route ('cooperators.edit', $item->id)}}" class="h-8 px-4 py-2 text-sm bg-green-800 text-white rounded font-medium dark:text-blue-500">Asignar</a>
+                <td class="text-center">
+                    <div class="py-2">
+                        <a href="{{ route ('cooperators.edit', $item->id)}}" class="h-8 px-4 py-2 text-sm bg-indigo-800 text-white rounded font-medium">Editar</a>
                     </div>
-                </td>
-                <td class="py-2 px-2 text-center">
-                    <div class="my-2">
-                        <a href="{{ route ('cooperators.edit', $item->id)}}" class="h-8 px-4 py-2 text-sm bg-blue-800 text-white rounded font-medium dark:text-blue-500">Editar</a>
-                    </div>
-                </td>
-                <td class="py-2 px-2 text-center">
-                    <div class="my-2">
+                    <div class="py-2">
                         <form action="{{ route('cooperators.destroy', $item)}}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="h-8 px-4 py-2 text-sm bg-red-800 text-white font-medium rounded">Eliminar</button>
+                            <button type="submit" class="h-8 px-4 py-2 text-sm bg-red-700 text-white font-medium rounded">Eliminar</button>
                         </form>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="py-2">
+                        <a href="{{ route ('cooperators.show', $item)}}" class="h-8 px-4 py-2 text-sm bg-amber-700 text-white rounded font-medium">Mostrar</a>
+                    </div>
+                    <div class="py-2">
+                        <a href="{{ route ('assignments.create', ['cooperator_id' => $item->id])}}" class="h-8 px-4 py-2 text-sm bg-green-600 text-white rounded font-medium">Asignar</a>
                     </div>
                 </td>
             </tr>

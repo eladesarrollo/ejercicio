@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -100,6 +101,15 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $assignments = Assignment::where('project_id', $project->id)->first();
+
+        /* dump($assignments);
+
+        dd(); */
+
+        if($assignments){
+            return back()->withErrors(["msg" => "El proyecto {$project->name} ya ha sido asignado, por tanto no se puede eliminar"]);
+        }
         $project->delete();
         return back();
     }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
+use App\Models\Cooperator;
+use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
@@ -22,9 +25,16 @@ class AssignmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, Assignment $assignment)
     {
-        //
+        $cooperator = Cooperator::find($request->cooperator_id);
+        $projects = Project::all();
+
+        return view('assignments.create', [
+            'cooperator'    =>  $cooperator,
+            'projects'      => $projects,
+            'assignments'   => $assignment
+        ]);
     }
 
     /**
@@ -33,9 +43,30 @@ class AssignmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Assignment $assignment)
     {
-        //
+        $request->validate([
+            'cooperator'    => 'required',
+            'project'       => 'required|nullable',
+            'date'          => 'required',
+            'amount'        => 'required|numeric'
+        ]);
+
+        $date = $request->date;
+        $date = Carbon::createFromFormat('m/d/Y', $date);
+        $date = $date->format('Y-m-d');
+
+        $assignment->firstOrCreate([
+            'cooperator_id' => $request->cooperator,
+            'project_id'    => $request->project,
+            'date'          => $date,
+            'amount'        => $request->amount
+        ]);
+
+        $cooperator = Cooperator::where('id', $request->cooperator)->first();
+        $assignments = Assignment::where('cooperator_id', $request->cooperator)->get();
+
+        return redirect()->route('cooperators.show', ['cooperator' => $cooperator, 'assigments' => $assignments]);
     }
 
     /**

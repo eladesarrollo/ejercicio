@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Cooperator;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class CooperatorController extends Controller
@@ -61,7 +63,8 @@ class CooperatorController extends Controller
      */
     public function show(Cooperator $cooperator)
     {
-        //
+        $assignments = Assignment::where('cooperator_id', $cooperator->id)->get();
+        return view('cooperators.show', ['cooperator' => $cooperator, 'assigments' => $assignments]);
     }
 
     /**
@@ -110,6 +113,10 @@ class CooperatorController extends Controller
      */
     public function destroy(Cooperator $cooperator)
     {
+        $assignments = Assignment::where('cooperator_id', $cooperator->id)->get();
+        foreach($assignments as $item){
+            $item->delete();
+        }
         $cooperator->delete();
         return back();
     }

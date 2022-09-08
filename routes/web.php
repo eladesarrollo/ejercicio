@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\CooperatorController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -11,3 +12,4 @@ Route::get('/', function () {
 //Cooperator Route
 Route::resource('cooperators', CooperatorController::class);
 Route::resource('projects', ProjectController::class);
+Route::resource('assignments', AssignmentController::class);
