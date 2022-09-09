@@ -14,9 +14,10 @@ class WorkerController extends Controller
      */
     public function index()
     {
-        //
+        //get all workers
         $workers = Worker::all();
 
+        //return view
         return view('worker.index')->with('workers', $workers);
     }
 
@@ -27,7 +28,7 @@ class WorkerController extends Controller
      */
     public function create()
     {
-        //
+        //return view
         return view('worker.create');
     }
 
@@ -39,14 +40,17 @@ class WorkerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //set model instance to save in DB
         $worker = new Worker();
         $worker->name = $request->get('name');
         $worker->email = $request->get('email');
         $worker->address = $request->get('address');
         $worker->active = $request->get('active') ?? 0;
+
+        //save in DB
         $worker->save();
 
+        //redirect to index
         return redirect('/workers');
     }
 
@@ -69,9 +73,10 @@ class WorkerController extends Controller
      */
     public function edit($id)
     {
-        //
-        $worker = Worker::find($id);
+        //find worker by id
+        $worker = Worker::findOrFail($id);
 
+        //return view
         return view('worker.edit')->with('worker', $worker);
     }
 
@@ -84,15 +89,19 @@ class WorkerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $worker = Worker::find($id);
+        //find worker by id
+        $worker = Worker::findOrFail($id);
 
+        //set model instance to save in DB
         $worker->name = $request->get('name');
         $worker->email = $request->get('email');
         $worker->address = $request->get('address');
         $worker->active = $request->get('active') ?? 0;
+
+        //save in DB
         $worker->save();
 
+        //redirect to index
         return redirect('/workers');
     }
 
@@ -104,10 +113,13 @@ class WorkerController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $worker = Worker::find($id);
+        //find worker by id
+        $worker = Worker::findOrFail($id);
+
+        //delete worker
         $worker->delete();
 
+        //redirect to index
         return redirect('/workers');
     }
 }

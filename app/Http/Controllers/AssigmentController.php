@@ -17,9 +17,10 @@ class AssigmentController extends Controller
      */
     public function index()
     {
-        //
+        //get asigments
         $assigments = Assigment::with(['worker', 'project'])->get();
 
+        //return view
         return view('assigment.index')->with('assigments', $assigments);
     }
 
@@ -30,10 +31,11 @@ class AssigmentController extends Controller
      */
     public function create()
     {
-        //
+        //get projects and workers actives fron DB
         $projects = Project::where('active', '=', 1)->get();
         $workers = Worker::where('active', '=', 1)->get();
 
+        //return view
         return view('assigment.create')->with('projects', $projects)->with('workers', $workers);       
     }
 
@@ -45,14 +47,27 @@ class AssigmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //set model instance to save in DB
         $assigment = new Assigment();
         $assigment->worker_id = $request->get('worker_id');
         $assigment->project_id = $request->get('project_id');
         $assigment->assigment_date = $request->get('assigment_date');
         $assigment->amount = $request->get('amount');
+
+        //verifiy if exist assigment
+        $exist = Assigment::where('worker_id', $assigment->worker_id)
+            ->where('project_id', $assigment->project_id)->first();
+        if ($exist != null)
+        {
+            //redirect with error
+            return redirect()->back()->withInput()
+                ->withErrors(['La asignación de proyecto y cooperante ya existe']);
+        }
+
+        //save in DB
         $assigment->save();
 
+        //redirect to index
         return redirect('/assigments');
     }
 
@@ -75,12 +90,14 @@ class AssigmentController extends Controller
      */
     public function edit($id)
     {
-        //
-        $assigment = Assigment::find($id);
+        //get assigment by id
+        $assigment = Assigment::findOrFail($id);
 
+        //get projects and workers actives fron DB
         $projects = Project::where('active', '=', 1)->get();
         $workers = Worker::where('active', '=', 1)->get();
 
+        //return view
         return view('assigment.edit')->with('assigment', $assigment)
             ->with('projects', $projects)
             ->with('workers', $workers);
@@ -95,15 +112,30 @@ class AssigmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $assigment = Assigment::find($id);
+        //get assigment by id
+        $assigment = Assigment::findOrFail($id);
 
+        //set model instance to save in DB
         $assigment->worker_id = $request->get('worker_id');
         $assigment->project_id = $request->get('project_id');
         $assigment->assigment_date = $request->get('assigment_date');
         $assigment->amount = $request->get('amount');
+
+        //verifiy if exist assigment
+        $exist = Assigment::where('worker_id', $assigment->worker_id)
+            ->where('project_id', $assigment->project_id)
+            ->where('id', '<>', $id)->first();  
+        if ($exist != null)
+        {
+            //redirect with error
+            return redirect()->back()->withInput()
+                ->withErrors(['La asignación de proyecto y cooperante ya existe']);
+        }
+
+        //save in DB
         $assigment->save();
 
+        //redirect to index
         return redirect('/assigments');
     }
 
@@ -115,10 +147,13 @@ class AssigmentController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $assigment = Assigment::find($id);
+        //get assigment by id
+        $assigment = Assigment::findOrFail($id);
+
+        //delete assigment
         $assigment->delete();
 
+        //redirect to index
         return redirect('/assigments');
     }
 }

@@ -14,9 +14,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        //get projects
         $projects = Project::all();
 
+        //return view
         return view('project.index')->with('projects', $projects);
     }
 
@@ -27,7 +28,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        //return view
         return view('project.create');
     }
 
@@ -39,15 +40,26 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Set model instance to save in DB
         $project = new Project();
         $project->name = $request->get('name');
         $project->description = $request->get('description');
         $project->start_date = $request->get('start_date');
         $project->end_date = $request->get('end_date');
         $project->active = $request->get('active') ?? 0;
+
+        //validate dates
+        if ($project->start_date > $project->end_date) 
+        {
+            //redirect with error
+            return redirect()->back()->withInput()
+                ->withErrors(['La fecha de inicio no puede ser mayor a la final']);
+        }
+
+        //Save in DB
         $project->save();
 
+        //redirect to index
         return redirect('/projects');
     }
 
@@ -70,9 +82,10 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
-        $project = Project::find($id);
+        //get project by id
+        $project = Project::findOrFail($id);
         
+        //return view
         return view('project.edit')->with('project', $project);
     }
 
@@ -85,16 +98,28 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $project = Project::find($id);
+        //get project by id
+        $project = Project::findOrFail($id);
 
+        //set model to save in DB
         $project->name = $request->get('name');
         $project->description = $request->get('description');
         $project->start_date = $request->get('start_date');
         $project->end_date = $request->get('end_date');
         $project->active = $request->get('active') ?? 0;
+
+        //validate dates
+        if ($project->start_date > $project->end_date) 
+        {
+            //redirect with error
+            return redirect()->back()->withInput()
+                ->withErrors(['La fecha de inicio no puede ser mayor a la final']);
+        }
+
+        //save in DB
         $project->save();
 
+        //redirect to index
         return redirect('/projects');
     }
 
@@ -106,10 +131,13 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $project = Project::find($id);
+        //get project by id
+        $project = Project::findOrFail($id);
+
+        //delete project
         $project->delete();
 
+        //redirect to index
         return redirect('/projects');
     }
 }

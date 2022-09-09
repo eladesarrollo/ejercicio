@@ -7,6 +7,12 @@
 <span class="fw-light">Editar Asignación</span>
 <br><br>
 
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+        <p class="text-danger">{{ $error }}</p>
+    @endforeach
+@endif
+
 <form action="{{ url('/assigments'.'/'.$assigment->id) }}" method="POST" role="form">
 
     @csrf
@@ -19,7 +25,7 @@
                 <label for="worker_id">Cooperante</label>
                 <select name="worker_id" class="form-select" required>
                     @foreach ($workers as $worker)
-                    <option value="{{ $worker->id }}" {{ ($worker->id == $assigment->worker_id) ? 'selected' : '' }}>
+                    <option value="{{ $worker->id }}" {{ ($worker->id == (old('worker_id') ?? $assigment->worker_id)) ? 'selected' : '' }}>
                         {{ $worker->name }}
                     </option>
                     @endforeach
@@ -29,7 +35,7 @@
                 <label for="project_id">Proyecto</label>
                 <select name="project_id" class="form-select" required>
                     @foreach ($projects as $project)
-                    <option value="{{ $project->id }}" {{ ($project->id == $assigment->project_id) ? 'selected': '' }}>
+                    <option value="{{ $project->id }}" {{ ($project->id == (old('project_id') ?? $assigment->project_id)) ? 'selected': '' }}>
                         {{ $project->name }}
                     </option>
                     @endforeach
@@ -37,11 +43,11 @@
             </div>
             <div class="form-group">
                 <label for="assigment_date">Fecha de Asignación</label>
-                <input type="date" class="form-control" name="assigment_date" value="{{ $assigment->assigment_date }}" required>
+                <input type="date" class="form-control" name="assigment_date" value="{{ old('assigment_date') ?? $assigment->assigment_date }}" required>
             </div>
             <div class="form-group">
                 <label for="amount">Monto</label>
-                <input type="number" class="form-control" name="amount" min="0" step="0.01" value="{{ $assigment->amount }}" required>
+                <input type="number" class="form-control" name="amount" min="0" step="0.01" value="{{ old('amount') ?? $assigment->amount }}" required>
             </div>
 
         </div>
@@ -58,7 +64,7 @@
 <br>
 
 <div class="col-sm-3">
-    <a href="{{ url('projects') }}"><button class="btn btn-outline-primary btn-group">Regresar</button></a>
+    <a href="{{ url('assigments') }}"><button class="btn btn-outline-primary btn-group">Regresar</button></a>
 </div>
 
 @endsection
