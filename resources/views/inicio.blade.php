@@ -46,6 +46,15 @@
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm" style="text-align: justify;">
                                     Agregar enlaces para el ejercicio: <br>
                                     -Catálogos<br>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('cooperante.index') }}">{{_('Cooperantes') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('proyecto.index') }}">{{_('Proyectos') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('asignacion.index') }}">{{_('Asignacion') }}</a>
+                                    </li>
                                     -Reporte<br>
                                     -Otros enlaces que considere necesario
                                 </div>

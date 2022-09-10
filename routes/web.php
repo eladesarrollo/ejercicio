@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CooperanteController;
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\AsignacionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('inicio');
 });
+
+/*Route::get('/cooperante', function () {
+    return view('cooperante.index');
+});
+
+Route::get('cooperante/create',[CooperanteController::class,'create']);
+*/
+Route::Resource('cooperante',CooperanteController::class);
+Route::Resource('proyecto',ProyectoController::class);
+Route::Resource('asignacion',AsignacionController::class);
