@@ -20,7 +20,7 @@ class AsignacionController extends Controller
         $datos['asignacions']=Asignacion::paginate(5);
         return view ('asignacion.index',$datos);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -31,9 +31,11 @@ class AsignacionController extends Controller
         //
         $asignacion = new asignacion();
          
-        $cooperantes= Cooperante::pluck('nombre','id');
+        //$cooperantes= Cooperante::pluck('nombre','id');
+        $cooperantes= Cooperante::all();
+        $proyectos= proyecto::all();
 
-        return view ('asignacion.create', compact('asignacion','cooperantes'));
+        return view ('asignacion.create', compact('asignacion','cooperantes','proyectos'));
  
     }
 
@@ -47,6 +49,8 @@ class AsignacionController extends Controller
     {
         //
         $campos=[
+            'cooperante_id'=>'required',
+            'proyecto_id'=>'required',
             'fecha'=>'required|date',
             'monto'=>'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/'
         ];
@@ -83,8 +87,10 @@ class AsignacionController extends Controller
     public function edit($id)
     {
         //
+        $cooperantes= Cooperante::all();
         $asignacion=Asignacion::findOrFail($id);
-        return view ('asignacion.edit',compact('asignacion') );
+       // return view ('asignacion.edit',compact('asignacion') );
+        return view ('asignacion.edit', compact('asignacion','cooperantes'));
     }
 
     /**
@@ -98,6 +104,8 @@ class AsignacionController extends Controller
     {
         //
         $campos=[
+            'cooperante_id'=>'required',
+            'proyecto_id'=>'required',
             'fecha'=>'required|date',
             'monto'=>'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/'
         ];
@@ -128,4 +136,6 @@ class AsignacionController extends Controller
         Asignacion::destroy($id);
         return redirect('asignacion')->with('mensaje','Asignación borrada');
     }
+
+    
 }

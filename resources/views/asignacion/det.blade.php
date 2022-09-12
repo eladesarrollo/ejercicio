@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container">
-    
+
     @if(Session::has('mensaje'))
     <div class="alert alert-success alert-dismissible" role="alert">
     {{ Session::get('mensaje') }}
@@ -11,7 +11,9 @@
     @endif
 
 
-<a href="{{ url('cooperante/create') }}" class="btn btn-success" > Registrar nuevo cooperante</a>
+<a href="{{ url('asignacion/create') }}" class="btn btn-success" > Registrar nueva Asignación</a>
+<a href="{{ url('asignacion/repo') }}" class="btn btn-success" > Ver detalle por Cooperante</a>
+
 
 
 <br>
@@ -21,29 +23,31 @@
     <thead class="thead-light">
         <tr>
             <th>#</th>
-            <th>Nombre</th>
-            <th>email</th>
-            <th>Direccion</th>
+            <th>Cooperante</th>
+            <th>Proyecto</th>
+            <th>Fecha</th>
+            <th>Monto</th>
             <th>Acciones</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach( $cooperantes as $cooperante)
+        @foreach( $asignacions as $asignacion)
         <tr>
-            <td>{{ $cooperante->id }}</td>
-            <td>{{ $cooperante->nombre }}</td>
-            <td>{{ $cooperante->email }}</td>
-            <td>{{ $cooperante->direccion }}</td>
+            <td>{{ $asignacion->id }}</td>
+            <td>{{ $asignacion->cooperante['nombre'] }}</td>
+            <td>{{ $asignacion->proyecto['nombre'] }}</td>
+            <td>{{ $asignacion->fecha }}</td>
+            <td>{{ $asignacion->monto }}</td>
             <td>
 
-            <a href="{{ url('/cooperante/'.$cooperante->id.'/edit') }}" class="btn btn-warning">
+            <a href="{{ url('/asignacion/'.$asignacion->id.'/edit') }}" class="btn btn-warning">
                 Editar
             </a>    
                 | 
                 
             <!---Borrar -->
-            <form  action="{{ url('/cooperante/'.$cooperante->id ) }}" class="d-inline" method="post">
+            <form  action="{{ url('/asignacion/'.$asignacion->id ) }}" class="d-inline" method="post">
                 @csrf
                 {{ method_field('DELETE') }}
                <input class="btn btn-danger" type="submit" onclick="return confirm('¿Quieres borrar?')" 
@@ -55,6 +59,6 @@
         @endforeach
     </tbody>
 </table>
-{!! $cooperantes->links() !!}
-</div>
+{!! $asignacions->links() !!}
 @endsection
+</div>

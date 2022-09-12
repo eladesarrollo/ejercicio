@@ -13,18 +13,28 @@
        
     @endif
 
-    <div class=form-group">
-    <Label for "cooperantes"> Cooperante  </Label>
-    <input type="text" class="form-control" name="cooperante_id" value="{{ isset($asignacion->cooperante_id)?$asignacion->cooperante_id:old('cooperante_id') }}" id="cooperante_id">
-    <br>
+    
+    <div class="form-group">
+            <label for="">Cooperante</label>
+            <select name="cooperante_id" id="inputCooperante_id" class="form-control">
+                <option value="">-- Seleccione el cooperante</opcion>
+                @foreach($cooperantes as $coo)
+                <option value= "{{$coo['id'] }}">{{ $coo['nombre'] }} </option>                          
+                @endforeach
+            </select>
     </div>
-
-    <div class=form-group">
-    <Label for "proyecto"> Proyecto  </Label>
-    <input type="text" class="form-control" name="proyecto_id" value="{{ isset($asignacion->proyecto_id)?$asignacion->proyecto_id:old('proyecto_id') }}" id="proyecto_id">
-    <br>
+   
+    <div class="form-group">
+            <label for="proyecto">Proyecto</label>
+            <select name="proyecto_id" id="inputCProyecto_id" class="form-control">
+                <option value="">-- Seleccione el proyecto</opcion>
+                @foreach($proyectos as $pro)
+                <option value= "{{$pro['id'] }}">{{ $pro['nombre'] }} </option>                          
+                @endforeach
+            </select>
     </div>
-
+    
+    
     <div class=form-group">
     <Label for "fecha"> Fecha  </Label>
     <input type="date" class="form-control" name="fecha" value="{{ isset($asignacion->fecha)?$asignacion->fecha:old('fecha') }}" id="nombre">

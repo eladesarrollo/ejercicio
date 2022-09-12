@@ -1,4 +1,8 @@
-Mostrar lista de proyectos
+
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
 
     @if(Session::has('mensaje'))
     <div class="alert alert-success alert-dismissible" role="alert">
@@ -50,3 +54,5 @@ Mostrar lista de proyectos
     </tbody>
 </table>
 {!! $proyectos->links() !!}
+</div>
+@endsection

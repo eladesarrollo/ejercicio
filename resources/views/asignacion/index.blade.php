@@ -1,4 +1,8 @@
-Mostrar lista de asignaciones
+
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
 
     @if(Session::has('mensaje'))
     <div class="alert alert-success alert-dismissible" role="alert">
@@ -8,7 +12,6 @@ Mostrar lista de asignaciones
 
 
 <a href="{{ url('asignacion/create') }}" class="btn btn-success" > Registrar nueva Asignación</a>
-
 
 <br>
 <br>
@@ -29,8 +32,8 @@ Mostrar lista de asignaciones
         @foreach( $asignacions as $asignacion)
         <tr>
             <td>{{ $asignacion->id }}</td>
-            <td>{{ $asignacion->cooperante_id }}</td>
-            <td>{{ $asignacion->proyecto_id }}</td>
+            <td>{{ $asignacion->cooperante['nombre'] }}</td>
+            <td>{{ $asignacion->proyecto['nombre'] }}</td>
             <td>{{ $asignacion->fecha }}</td>
             <td>{{ $asignacion->monto }}</td>
             <td>
@@ -54,3 +57,5 @@ Mostrar lista de asignaciones
     </tbody>
 </table>
 {!! $asignacions->links() !!}
+@endsection
+</div>

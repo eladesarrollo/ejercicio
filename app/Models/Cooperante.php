@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Cooperante extends Model
 {
     use HasFactory;
+    
+    public function asignacions(){
+        
+        return $this->hasMany('App\Models\Asignacions');
+    }
+
 }
