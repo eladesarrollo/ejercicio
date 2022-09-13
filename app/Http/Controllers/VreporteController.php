@@ -17,18 +17,23 @@ class VreporteController extends Controller
 
     public function index()
     {
-        $cooperantes= Cooperante::all();        
-       // $asignacions = Asignacion::all();
-        
+        /*$cooperantes= Cooperante::all();                       
         $datos['asignacions']=Asignacion::paginate(5);
-        return view ('vreporte.index',compact('datos','cooperantes'));
+        return view ('vreporte.index',compact('datos','cooperantes'));*/
+        $asignacion = new asignacion();
+         
+        $cooperantes= Cooperante::all();        
 
-        //return view ('vreporte.index', compact('asignacions','cooperantes'));
+        return view ('vreporte.index', compact('asignacion','cooperantes'));
+       
     }
 
-    public function show(asignacion $asignacion)
-    {                        
+    //asignacion $asignacion
+    public function show( $myid )
+    {      
+        //$cooperante_id=$myid;                  
         $asignacions = Asignacion::all();
+        //$asignacions = Asignacion::where('cooperante_id',$myid )->get();
         return view ('vreporte.show', compact('asignacions'));
     }
     

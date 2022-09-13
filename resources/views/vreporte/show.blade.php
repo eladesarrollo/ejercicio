@@ -11,6 +11,8 @@
     {{ Session::get('mensaje') }}
     </div>
     @endif
+    
+    
 
 
 <h2>Reporte de asignaciones por cooperante</h2>
@@ -36,20 +38,22 @@
             $sum=0.00;
         @endphp
         @foreach( $asignacions as $det)
-        
-        <tr>
-            <td>{{ $det->id }}</td>
-            <td>{{ $det->cooperante['nombre'] }}</td>
-            <td>{{ $det->proyecto['nombre'] }}</td>
-            <td>{{ $det->fecha }}</td>
-            <td>{{ $det->monto }}</td>        
-            </form>
-            </td>         
-        </tr>
-        @php
-            $sum+= $det->monto;
-        @endphp
+            
+                <tr>
+                    <td>{{ $det->id }}</td>
+                    <td>{{ $det->cooperante['nombre'] }}</td>
+                    <td>{{ $det->proyecto['nombre'] }}</td>
+                    <td>{{ $det->fecha }}</td>
+                    <td>{{ $det->monto }}</td>        
+                    </form>
+                    </td>         
+                </tr>
+                @php
+                    $sum+= $det->monto;
+                @endphp
+
         @endforeach
+
             <td></td>
             <td></td>
             <td></td>

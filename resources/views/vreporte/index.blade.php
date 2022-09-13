@@ -3,10 +3,10 @@
 @section('content')
 <div class="container">
 
-<form action="{{ url('/asignacion') }}" method="post">
+<form action="{{ url('/vreporte/show') }}" method="post">
     @csrf   
     @php
-        $myid= 0;
+        $myid= 2;
     @endphp
    
     
@@ -22,11 +22,25 @@
     </div>
    
 @endif
-
+<script>
+function validar() {
+            
+            var cooper=document.getElementById('coope');
+            if(cooper.value==0||cooper.value=="")
+            { 
+                alert('Selecciona un cooperante');
+                cooper.focus();
+                return 0;
+            }
+                else 
+                //confirm(cooper.value);
+                return $myid = cooper.value;
+        }
+</script> 
 
 <div class="form-group">
             <label for="">Cooperante</label>
-            <select name="cooperante_id" id="inputCooperante_id" class="form-control">
+            <select name="coope" id="coope" class="form-control">
                 <option value="">-- Seleccione el cooperante</opcion>
                 @foreach($cooperantes as $coo)
                 <option value= "{{$coo['id'] }}">{{ $coo['nombre'] }} </option>                          
@@ -34,9 +48,21 @@
             </select>
     </div>
     <br>
-    <a href="{{ url('/vreporte/show') }}" class="btn btn-warning">
+
+    <form action="{{ url('/vreporte/show'.$myid) }}" method="post">
+    <input  class="btn btn-danger" type="submit" onClick="validar();" value="GENERAR">
+    @csrf
+    {{ method_field('GET') }}
+
+    <!--- <a href="{{ url('/vreporte/show'.$myid) }}" class="btn btn-warning">
                 Generar Reporte
-            </a> 
+            </a>  --->
+
+    <!--- <form  action="{{ url('/vreporte/show'.$myid ) }}" class="d-inline" method="post">
+        @csrf
+        {{ method_field('GET') }}
+        <input class="btn btn-danger" type="submit" 
+        value="GENERAR">--->
 
 <br>
 </form>
