@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CooperanteController;
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\AsignacionController;
+use App\Http\Controllers\VreporteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +19,31 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('inicio');
 });
+
+/*Route::get('/cooperante', function () {
+    return view('cooperante.index');
+});
+
+Route::get('cooperante/create',[CooperanteController::class,'create']);
+*/
+Route::Resource('cooperante',CooperanteController::class)->middleware('auth');
+Auth::routes();
+Route::Resource('proyecto',ProyectoController::class)->middleware('auth');
+Route::Resource('asignacion',AsignacionController::class)->middleware('auth');
+//Route::Resource('vreporte',VreporteController::class)->middleware('auth');
+
+Route::get(
+    '/vreporte/',
+    [VreporteController::class, 'index']
+)->name('vreporte.index')->middleware('auth');;
+
+Route::get(
+    '/vreporte/{cooperante}',
+    [VreporteController::class, 'show']
+)->name('vreporte.show')->middleware('auth');;
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Auth::routes();
+
