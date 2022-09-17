@@ -30,8 +30,17 @@ Route::Resource('cooperante',CooperanteController::class)->middleware('auth');
 Auth::routes();
 Route::Resource('proyecto',ProyectoController::class)->middleware('auth');
 Route::Resource('asignacion',AsignacionController::class)->middleware('auth');
-Route::Resource('vreporte',VreporteController::class)->middleware('auth');
+//Route::Resource('vreporte',VreporteController::class)->middleware('auth');
 
+Route::get(
+    '/vreporte/',
+    [VreporteController::class, 'index']
+)->name('vreporte.index')->middleware('auth');;
+
+Route::get(
+    '/vreporte/{cooperante}',
+    [VreporteController::class, 'show']
+)->name('vreporte.show')->middleware('auth');;
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

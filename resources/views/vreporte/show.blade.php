@@ -15,7 +15,7 @@
     
 
 
-<h2>Reporte de asignaciones por cooperante</h2>
+<h2>Reporte de asignaciones cooperante: {{ $cooperante['nombre'] }}</h2>
 
 
 <br>
@@ -25,10 +25,9 @@
     <thead class="thead-light">
         <tr>
             <th>#</th>
-            <th>Cooperante</th>
             <th>Proyecto</th>
             <th>Fecha</th>
-            <th>Monto</th>
+            <th>Monto($)</th>
 
         </tr>
     </thead>
@@ -37,11 +36,10 @@
         @php
             $sum=0.00;
         @endphp
-        @foreach( $asignacions as $det)
+        @foreach( $cooperante->asignacions as $det)
             
                 <tr>
                     <td>{{ $det->id }}</td>
-                    <td>{{ $det->cooperante['nombre'] }}</td>
                     <td>{{ $det->proyecto['nombre'] }}</td>
                     <td>{{ $det->fecha }}</td>
                     <td>{{ $det->monto }}</td>        
@@ -56,9 +54,8 @@
 
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td>{{ $sum }}</td> 
+            <td><b>Total$</b></td>
+            <td><b>{{ $sum }}</b></td> 
     </tbody>
 </table>
 

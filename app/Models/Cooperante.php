@@ -11,7 +11,7 @@ class Cooperante extends Model
     
     public function asignacions(){
         
-        return $this->hasMany('App\Models\Asignacions');
+        return $this->hasMany('App\Models\asignacion');
     }
 
 }
