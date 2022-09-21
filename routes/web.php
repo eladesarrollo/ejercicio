@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('inicio');
 });
+Route::get('/asignacion/reporte', [\App\Http\Controllers\AsignacionController::class, 'report'])->name('asignacion.report');
+Route::get('/cooperante/reporte', [\App\Http\Controllers\CooperanteController::class, 'report'])->name('cooperante.report');
+Route::get('/proyecto/reporte', [\App\Http\Controllers\ProyectoController::class, 'report'])-> name('proyecto.report');
+Route::resource('cooperante', \App\Http\Controllers\CooperanteController::class);
+Route::resource('proyecto', \App\Http\Controllers\ProyectoController::class);
+Route::resource('asignacion', \App\Http\Controllers\AsignacionController::class);
+
