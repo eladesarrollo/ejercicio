@@ -17,7 +17,8 @@ class ProyectoFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nombre' => fake()->name(),
+            'descripcion' => fake()->text(),
         ];
     }
 }
