@@ -6,7 +6,9 @@
 
         <h1>Proyectos</h1>
 
-        <a href="{{ route('proyectos.create') }}" class="btn btn-primary">Crear Proyecto</a>  
+        @auth
+            <a href="{{ route('proyectos.create') }}" class="btn btn-primary">Crear Proyecto</a>     
+        @endauth         
         
         @if(session('status'))
             <br><br>

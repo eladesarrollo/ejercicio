@@ -8,6 +8,10 @@ use App\Http\Requests\SaveProyectoRequest;
 
 class ProyectoController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth',['except' => ['index','show']]);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +50,11 @@ class ProyectoController extends Controller
     {
         Proyecto::create($request->validated());
 
-        return redirect()->route('proyectos.index')->with('status', 'El proyecto fue creado con éxito.');
+        session()->flash('status', 'El proyecto fue creado con éxito.');
+
+        return redirect()->route('proyectos.index');
+
+        //return redirect()->route('proyectos.index')->with('status', 'El proyecto fue creado con éxito.');
     }
 
     /**
