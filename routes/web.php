@@ -36,3 +36,13 @@ Route::get('asignaciones/obtenerReporte/{cooperante?}',[AsignacionController::cl
 Route::get('asignaciones/{asignacion}/edit', [AsignacionController::class,'edit'])->name('asignaciones.edit');
 
 Route::patch('asignaciones/{asignacion}', [AsignacionController::class,'update'])->name('asignaciones.update');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
